@@ -3,7 +3,7 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onMount } from "svelte";
   import { aboutMe } from "../constanta/about";
-  import { Foto2, Foto2Transparent } from "../constanta/image";
+  import { Foto2 } from "../constanta/image";
   import GooeyHeading from "./GooeyHeading.svelte";
 
   gsap.registerPlugin(ScrollTrigger);

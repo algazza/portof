@@ -3,7 +3,7 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onMount } from "svelte";
   import { heroSection } from "../constanta/hero";
-  import { Foto1, Foto1Transparent } from "../constanta/image";
+  import { Foto1Transparent } from "../constanta/image";
   import GooeyHeading from "./GooeyHeading.svelte";
 
   gsap.registerPlugin(ScrollTrigger);
@@ -202,7 +202,7 @@
         </div>
 
         <img
-          src={Foto1Transparent || Foto1}
+          src={Foto1Transparent}
           alt="Portrait of Fadhil Al Ghaza"
           class="w-full h-full object-cover object-top grayscale contrast-200 brightness-95 mix-blend-luminosity filter transition-transform duration-500"
         />
