@@ -2,13 +2,16 @@ import { MockupLeadoc, MockupSnapparel, MockupSwave } from "./image";
 
 export const projectsArray = [
   {
-    title: "Fullstack E-Commerce Boilerplate",
+    title: "Swave E-Commerce",
     image: MockupSwave,
     role: "Fullstack Developer",
     tech_stack: ["Typescript", "Vue & Nuxt", "TailwindCSS", "Bun", "Hono"],
     context: "Solo Project",
+    FERepo: "https://github.com/algazza/swave-frontend",
+    BERepo: "https://github.com/algazza/swave-backend",
+    link: "",
     description:
-      "Membangun boilerplate e-commerce fullstack dengan fokus pada optimasi performa aset, proteksi spam request, dan manajemen siklus pembayaran tertunda untuk memastikan transaksi digital yang aman dan mulus",
+      "Membangun e-commerce jewelry fullstack dengan fokus pada optimasi performa aset, proteksi spam request, dan manajemen siklus pembayaran tertunda untuk memastikan transaksi digital yang aman dan mulus",
   },
   {
     title: "Leadoc",
@@ -37,6 +40,8 @@ export const projectsArray = [
       "Express",
     ],
     context: "Capstone Project",
+    FERepo: "https://github.com/PJBL-2025/frontend_pjbl2025-v2",
+    BERepo: "https://github.com/PJBL-2025/PJBL2025_Backend",
     description:
       "Membangun platform kustomisasi pakaian dengan fitur pratinjau visual interaktif guna mengeliminasi miskomunikasi, meningkatkan akurasi produksi, dan menekan siklus revisi",
   },

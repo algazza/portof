@@ -1,5 +1,8 @@
+import { Foto1 } from "./image";
+
 export const aboutMe = {
   name: "Fadhil Al Ghaza Aswadira",
+  image: Foto1,
   description: `Saya adalah seorang Frontend Developer yang berbasis di Semarang, dengan pengalaman membangun solusi antarmuka digital di lingkungan perbankan, ekosistem organisasi, hingga agensi software house. 
 
   Selama perjalanan ini, saya berfokus pada eksplorasi arsitektur web modern menggunakan ekosistem React dan Vue, membantu tim mendigitalisasi proses konvensional menjadi produk yang lebih efisien dan responsif.
