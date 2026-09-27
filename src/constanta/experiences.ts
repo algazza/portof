@@ -34,7 +34,7 @@ export const experiencesArray = [
     startDate: "September 2024",
     endDate: "Oktober 2024",
     description:
-      "Membangun ekosistem e-voting terintegrasi dan Panel Admin real-time untuk mendigitalisasi sistem pemilihan manual secara efisien..",
+      "Membangun ekosistem e-voting terintegrasi dan Panel Admin real-time untuk mendigitalisasi sistem pemilihan manual secara efisien",
     skills: ["Typescript", "React + Next.js", "TailwindCSS", "Pusher", "Axios"],
   },
 ];

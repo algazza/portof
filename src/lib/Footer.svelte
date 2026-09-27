@@ -20,9 +20,7 @@
 <footer
   class="w-full bg-black border-t-2 border-[#FF0000] py-16 px-6 md:px-16 text-[#FF0000]"
 >
-  <!-- 3-Column Layout on Laptop / Stacked on Mobile as mandated by design.md -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-start">
-    <!-- Left Column: Logo & Role -->
     <div class="flex flex-col">
       <a
         href="#hero"
@@ -34,13 +32,9 @@
       <span class="font-caption text-[#FF0000] mt-1 tracking-widest block">
         FRONTEND DEVELOPER
       </span>
-      <p class="font-body text-xs text-[#FF0000]/70 mt-4 max-w-xs">
-        Engineered with Digital Brutalism and Matt Reeves' The Batman (2022)
-        aesthetic.
-      </p>
+      <p class="font-body text-xs text-[#FF0000]/70 mt-4 max-w-xs"></p>
     </div>
 
-    <!-- Center Column: Navigation Links -->
     <div class="flex flex-col">
       <span class="font-caption text-[#FF0000] font-bold tracking-widest mb-4">
         // NAVIGATION ARCHIVE
@@ -61,7 +55,6 @@
       </ul>
     </div>
 
-    <!-- Right Column: Social Media Links -->
     <div class="flex flex-col">
       <span class="font-caption text-[#FF0000] font-bold tracking-widest mb-4">
         // CONNECT & REPOSITORIES
@@ -105,15 +98,14 @@
     </div>
   </div>
 
-  <!-- Bottom Metadata Stamp -->
   <div
     class="mt-12 pt-6 border-t border-[#FF0000]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-[#FF0000]/60"
   >
     <div>© 2026 FADHIL AL GHAZA ASWADIRA. ALL RIGHTS RESERVED.</div>
     <div class="flex items-center gap-3">
-      <span>NO_AI_SLOP_VERIFIED</span>
+      <span>LIVERPOOL</span>
       <span class="h-1.5 w-1.5 bg-[#FF0000]"></span>
-      <span>STRICT_DUOTONE</span>
+      <span>Y_N_W_A</span>
     </div>
   </div>
 </footer>

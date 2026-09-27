@@ -8,9 +8,8 @@
 </script>
 
 <header
-  class="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-4 md:px-12 md:py-6 bg-black/80 backdrop-blur-xs border-b border-[#FF0000]/20"
+  class="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-4 md:px-12 md:py-6 bg-black/80 backdrop-blur-xs"
 >
-  <!-- Left: Logo text with Halftone effect -->
   <a
     href="#hero"
     on:click|preventDefault={() => scrollToSection("#hero")}
@@ -23,7 +22,6 @@
       >
         AL GHAZA
       </span>
-      <!-- Halftone Dot Overlay for Logo -->
       <span
         class="halftone-overlay pointer-events-none absolute inset-0 opacity-40 mix-blend-multiply group-hover:opacity-75 transition-opacity"
         aria-hidden="true"
@@ -36,7 +34,6 @@
     </span>
   </a>
 
-  <!-- Right: High impact CTA button for HR/Recruiters -->
   <a
     href="#contact"
     on:click|preventDefault={() => scrollToSection("#contact")}

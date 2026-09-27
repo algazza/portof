@@ -9,27 +9,56 @@
 
   let sectionEl: HTMLElement;
   let bodyMaskedEl: HTMLElement;
+  let projectCardsEl: HTMLElement;
 
   onMount(() => {
     const ctx = gsap.context(() => {
-      // Reversible masked body text entrance and exit (R-19, R-31, strictly NO opacity)
       if (bodyMaskedEl) {
         gsap.fromTo(
           bodyMaskedEl,
-          { y: "105%" },
+          { y: "105%", opacity: 0 },
           {
             y: "0%",
-            duration: 0.8,
+            opacity: 1,
+            duration: 0.7,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: sectionEl,
-              start: "top 75%",
-              end: "bottom 15%",
-              toggleActions: "restart reverse restart reverse",
+              trigger: bodyMaskedEl,
+              start: "top 85%",
+              end: "bottom 10%",
+              toggleActions: "play reverse play reverse",
             },
           },
         );
       }
+
+      const cards = projectCardsEl
+        ? projectCardsEl.querySelectorAll(".project-card")
+        : [];
+      cards.forEach((card, index) => {
+        gsap.fromTo(
+          card,
+          {
+            y: 60,
+            opacity: 0,
+            scale: 0.95,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            delay: (index % 2) * 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            },
+          },
+        );
+      });
     }, sectionEl);
 
     return () => ctx.revert();
@@ -39,10 +68,9 @@
 <section
   id="projects"
   bind:this={sectionEl}
-  class="relative min-h-screen w-full bg-black border-b border-[#FF0000]/30 py-24 px-4 sm:px-6 md:px-16"
+  class="relative min-h-screen w-full bg-black border-b border-[#FF0000]/30 py-24 px-4 sm:px-8 md:px-16 overflow-hidden"
 >
-  <!-- Section Title -->
-  <div class="mb-12 max-w-3xl">
+  <div class="mb-16 max-w-3xl">
     <div class="flex items-center gap-2 mb-2">
       <span class="h-2 w-2 bg-[#FF0000]" aria-hidden="true"></span>
       <span class="font-caption text-[#FF0000] tracking-widest text-xs"
@@ -52,41 +80,38 @@
 
     <GooeyHeading level="h2" text="SELECTED PROJECTS" />
 
-    <!-- Masked Body Description (STRICT: NO OPACITY FADE-IN, REVERSIBLE) -->
     <div class="masked-body-wrapper mt-4">
       <div bind:this={bodyMaskedEl} class="masked-body-content">
         <p
-          class="font-body text-[#FF0000] text-sm md:text-base max-w-2xl leading-relaxed"
+          class="font-body text-[#FF0000] max-w-2xl text-sm sm:text-base leading-relaxed"
         >
           Curated showcase of web applications, client solutions, and
           open-source contributions. Built with resilient architectures and
-          attention to interface dynamics.
+          intentional interface dynamics.
         </p>
       </div>
     </div>
   </div>
 
-  <!-- Brutalist Project Grid -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+  <div
+    bind:this={projectCardsEl}
+    class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 w-full"
+  >
     {#each projectsArray as project, index (project.title)}
       {@const hasLiveLink = Boolean(project.link && project.link.trim() !== "")}
       <article
-        class="dither-card bg-black border-2 border-[#FF0000] flex flex-col justify-between overflow-hidden group {hasLiveLink
-          ? 'hover:shadow-[8px_8px_0px_#FF0000]'
-          : 'opacity-95'}"
+        class="project-card dither-card bg-black border-2 border-[#FF0000] flex flex-col justify-between overflow-hidden group shadow-[6px_6px_0px_rgba(255,0,0,0.3)] hover:shadow-[10px_10px_0px_#FF0000] transition-all duration-300"
       >
-        <!-- Mockup Visual Display -->
         <div
-          class="relative w-full aspect-[16/9] border-b-2 border-[#FF0000] bg-black overflow-hidden"
+          class="relative w-full aspect-video border-b-2 border-[#FF0000] bg-black overflow-hidden"
         >
           <img
             src={project.image}
             alt="Preview of {project.title}"
-            class="w-full h-full object-cover object-center grayscale contrast-150 brightness-90 transition-transform duration-500 group-hover:scale-105"
+            class="w-full h-full object-cover object-center grayscale contrast-150 brightness-90 transition-transform duration-700"
             loading="lazy"
           />
 
-          <!-- Red Tint & Halftone Dither Overlay -->
           <div
             class="pointer-events-none absolute inset-0 bg-[#FF0000]/20 mix-blend-color"
           ></div>
@@ -94,22 +119,21 @@
             class="halftone-overlay pointer-events-none absolute inset-0 opacity-40 mix-blend-screen group-hover:opacity-20 transition-opacity"
           ></div>
 
-          <!-- Status Badge in Image Corner -->
           <div
-            class="absolute top-3 left-3 bg-black border border-[#FF0000] px-2.5 py-1 text-[11px] font-mono text-[#FF0000]"
+            class="absolute top-3 left-3 bg-black border border-[#FF0000] px-2.5 py-1 text-[11px] font-mono text-[#FF0000] shadow-[2px_2px_0px_#FF0000]"
           >
             INDEX: PRJ-0{index + 1} // {project.context.toUpperCase()}
           </div>
 
           {#if hasLiveLink}
             <div
-              class="absolute top-3 right-3 bg-[#FF0000] text-black px-2.5 py-1 text-[11px] font-mono font-bold tracking-wider"
+              class="absolute top-3 right-3 bg-[#FF0000] text-black px-2.5 py-1 text-[11px] font-mono font-bold tracking-wider shadow-[2px_2px_0px_#000]"
             >
               LIVE APP AVAILABLE
             </div>
           {:else}
             <div
-              class="absolute top-3 right-3 bg-black border border-[#FF0000] text-[#FF0000] px-2.5 py-1 text-[11px] font-mono tracking-wider"
+              class="absolute top-3 right-3 bg-black border border-[#FF0000] text-[#FF0000] px-2.5 py-1 text-[11px] font-mono tracking-wider shadow-[2px_2px_0px_#FF0000]"
             >
               {project.FERepo || project.BERepo
                 ? "SOURCE CODE AVAILABLE"
@@ -118,28 +142,26 @@
           {/if}
         </div>
 
-        <!-- Content Area -->
         <div class="p-6 md:p-8 flex flex-col flex-1 justify-between">
           <div>
             <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs font-mono text-[#FF0000]/80"
+              <span class="text-xs font-mono text-[#FF0000]/80 font-semibold"
                 >ROLE: {project.role}</span
               >
             </div>
 
-            <h3 class="font-h3 text-[#FF0000] font-bold">
+            <h3 class="font-h3 text-[#FF0000] font-bold group-hover:underline">
               {project.title}
             </h3>
 
             <p
-              class="font-body text-[#FF0000] mt-3 leading-relaxed text-sm md:text-base"
+              class="font-body text-[#FF0000] mt-3 leading-relaxed text-sm sm:text-base"
             >
               {project.description}
             </p>
           </div>
 
           <div class="mt-6 pt-4 border-t border-[#FF0000]/40">
-            <!-- Tech Stack Tags -->
             <div class="flex flex-wrap gap-2 mb-6">
               {#each project.tech_stack as tech}
                 <span
@@ -150,7 +172,6 @@
               {/each}
             </div>
 
-            <!-- Action Links: Guaranteed working links, zero dead controls -->
             <div class="flex flex-wrap items-center gap-3">
               {#if hasLiveLink}
                 <a

@@ -10,6 +10,9 @@
 
   let sectionEl: HTMLElement;
   let bodyMaskedEl: HTMLElement;
+  let formBoxEl: HTMLElement;
+  let emailBoxEl: HTMLElement;
+  let socialBoxEl: HTMLElement;
 
   let name = "";
   let email = "";
@@ -36,7 +39,6 @@
       return;
     }
 
-    // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
       formStatus = {
@@ -83,23 +85,102 @@
 
   onMount(() => {
     const ctx = gsap.context(() => {
-      // Reversible masked body text entrance and exit (R-19, R-31, strictly NO opacity)
       if (bodyMaskedEl) {
         gsap.fromTo(
           bodyMaskedEl,
-          { y: "105%" },
+          { y: "105%", opacity: 0 },
           {
             y: "0%",
-            duration: 0.8,
+            opacity: 1,
+            duration: 0.7,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: sectionEl,
-              start: "top 75%",
-              end: "bottom 15%",
-              toggleActions: "restart reverse restart reverse",
+              trigger: bodyMaskedEl,
+              start: "top 85%",
+              end: "bottom 10%",
+              toggleActions: "play reverse play reverse",
             },
           },
         );
+      }
+
+      if (formBoxEl) {
+        gsap.fromTo(
+          formBoxEl,
+          { x: -50, opacity: 0, scale: 0.97 },
+          {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: formBoxEl,
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            },
+          },
+        );
+      }
+
+      if (emailBoxEl) {
+        gsap.fromTo(
+          emailBoxEl,
+          { x: 50, opacity: 0, scale: 0.97 },
+          {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.75,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: emailBoxEl,
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            },
+          },
+        );
+      }
+
+      if (socialBoxEl) {
+        const socialTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: socialBoxEl,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play reverse play reverse",
+          },
+        });
+
+        socialTl.fromTo(
+          socialBoxEl,
+          { x: 50, opacity: 0, scale: 0.97 },
+          {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.75,
+            ease: "power3.out",
+          },
+        );
+
+        const socialItems = socialBoxEl.querySelectorAll("li");
+        if (socialItems.length > 0) {
+          socialTl.fromTo(
+            socialItems,
+            { x: 20, opacity: 0 },
+            {
+              x: 0,
+              opacity: 1,
+              stagger: 0.1,
+              duration: 0.4,
+              ease: "power2.out",
+            },
+            "-=0.4",
+          );
+        }
       }
     }, sectionEl);
 
@@ -110,9 +191,9 @@
 <section
   id="contact"
   bind:this={sectionEl}
-  class="relative min-h-screen w-full bg-black py-24 px-4 sm:px-6 md:px-16 border-b border-[#FF0000]/30"
+  class="relative min-h-screen w-full bg-black py-24 px-4 sm:px-8 md:px-16 border-b border-[#FF0000]/30 overflow-hidden"
 >
-  <div class="mb-12 max-w-3xl">
+  <div class="mb-16 max-w-3xl">
     <div class="flex items-center gap-2 mb-2">
       <span class="h-2 w-2 bg-[#FF0000]" aria-hidden="true"></span>
       <span class="font-caption text-[#FF0000] tracking-widest text-xs"
@@ -120,14 +201,12 @@
       >
     </div>
 
-    <!-- Mandatory phrase: "Touch Me" / "Get In Touch" with Gooey Heading -->
     <GooeyHeading level="h2" text="TOUCH ME // GET IN TOUCH" />
 
-    <!-- Masked Body Description (Strictly NO opacity fade-in, reversible) -->
     <div class="masked-body-wrapper mt-4">
       <div bind:this={bodyMaskedEl} class="masked-body-content">
         <p
-          class="font-body text-[#FF0000] text-sm md:text-base max-w-xl leading-relaxed"
+          class="font-body text-[#FF0000] max-w-xl text-sm sm:text-base leading-relaxed"
         >
           Available for senior frontend opportunities, high-impact web
           contracts, and challenging technical architectures. Initiate contact
@@ -137,10 +216,10 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-    <!-- Left Column: Industrial Contact Form (Bottom border only, no rounded corners) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
     <div
-      class="lg:col-span-7 bg-black border-2 border-[#FF0000] p-6 md:p-10 shadow-[8px_8px_0px_#FF0000]"
+      bind:this={formBoxEl}
+      class="lg:col-span-7 bg-black border-2 border-[#FF0000] p-6 sm:p-10 shadow-[8px_8px_0px_#FF0000]"
     >
       <div
         class="border-b border-[#FF0000] pb-3 mb-8 flex justify-between items-center text-xs font-mono text-[#FF0000]"
@@ -150,11 +229,10 @@
       </div>
 
       <form on:submit={handleSubmit} class="space-y-8" novalidate>
-        <!-- Field: Name -->
         <div class="flex flex-col gap-2">
           <label
             for="contact-name"
-            class="font-caption text-[#FF0000] font-bold tracking-wider"
+            class="font-caption text-[#FF0000] font-bold tracking-wider text-xs"
           >
             [01] YOUR NAME / IDENTITY *
           </label>
@@ -164,15 +242,14 @@
             bind:value={name}
             required
             placeholder="e.g. Bruce Wayne or HR Specialist"
-            class="w-full bg-black border-0 border-b-2 border-[#FF0000] py-3 text-base text-[#FF0000] placeholder-[#FF0000]/40 rounded-none focus:border-[#FF0000] focus:ring-0 focus:outline-none transition-colors"
+            class="w-full bg-black border-0 border-b-2 border-[#FF0000] py-3 text-sm sm:text-base text-[#FF0000] placeholder-[#FF0000]/40 rounded-none focus:border-[#FF0000] focus:ring-0 focus:outline-none transition-colors"
           />
         </div>
 
-        <!-- Field: Email -->
         <div class="flex flex-col gap-2">
           <label
             for="contact-email"
-            class="font-caption text-[#FF0000] font-bold tracking-wider"
+            class="font-caption text-[#FF0000] font-bold tracking-wider text-xs"
           >
             [02] YOUR EMAIL ADDRESS *
           </label>
@@ -182,15 +259,14 @@
             bind:value={email}
             required
             placeholder="name@organization.com"
-            class="w-full bg-black border-0 border-b-2 border-[#FF0000] py-3 text-base text-[#FF0000] placeholder-[#FF0000]/40 rounded-none focus:border-[#FF0000] focus:ring-0 focus:outline-none transition-colors"
+            class="w-full bg-black border-0 border-b-2 border-[#FF0000] py-3 text-sm sm:text-base text-[#FF0000] placeholder-[#FF0000]/40 rounded-none focus:border-[#FF0000] focus:ring-0 focus:outline-none transition-colors"
           />
         </div>
 
-        <!-- Field: Message -->
         <div class="flex flex-col gap-2">
           <label
             for="contact-message"
-            class="font-caption text-[#FF0000] font-bold tracking-wider"
+            class="font-caption text-[#FF0000] font-bold tracking-wider text-xs"
           >
             [03] TRANSMISSION PAYLOAD / MESSAGE *
           </label>
@@ -200,11 +276,10 @@
             required
             rows="4"
             placeholder="State project scope, timeline, role details, or inquiry..."
-            class="w-full bg-black border-0 border-b-2 border-[#FF0000] py-3 text-base text-[#FF0000] placeholder-[#FF0000]/40 rounded-none focus:border-[#FF0000] focus:ring-0 focus:outline-none transition-colors resize-y min-h-[100px]"
+            class="w-full bg-black border-0 border-b-2 border-[#FF0000] py-3 text-sm sm:text-base text-[#FF0000] placeholder-[#FF0000]/40 rounded-none focus:border-[#FF0000] focus:ring-0 focus:outline-none transition-colors resize-y min-h-[100px]"
           ></textarea>
         </div>
 
-        <!-- Feedback UI States: Empty / Loading / Success / Error -->
         {#if formStatus.message}
           <div
             role="status"
@@ -219,7 +294,6 @@
           </div>
         {/if}
 
-        <!-- Submit Button -->
         <button
           type="submit"
           disabled={isSubmitting}
@@ -236,11 +310,13 @@
       </form>
     </div>
 
-    <!-- Right Column: Direct Contact & Social Links (Strictly duotone red/black) -->
     <div class="lg:col-span-5 flex flex-col gap-8">
-      <!-- Direct Email Box -->
-      <div class="border-2 border-[#FF0000] p-6 bg-black dither-grid-fine">
-        <span class="font-caption text-[#FF0000] tracking-widest block mb-2"
+      <div
+        bind:this={emailBoxEl}
+        class="border-2 border-[#FF0000] p-6 bg-black dither-grid-fine shadow-[6px_6px_0px_#FF0000]"
+      >
+        <span
+          class="font-caption text-[#FF0000] tracking-widest block mb-2 text-xs"
           >// DIRECT MAIL</span
         >
         <a
@@ -255,14 +331,16 @@
         </p>
       </div>
 
-      <!-- Social Media Direct Links -->
-      <div class="border-2 border-[#FF0000] p-6 bg-black">
-        <span class="font-caption text-[#FF0000] tracking-widest block mb-4"
+      <div
+        bind:this={socialBoxEl}
+        class="border-2 border-[#FF0000] p-6 bg-black shadow-[6px_6px_0px_#FF0000]"
+      >
+        <span
+          class="font-caption text-[#FF0000] tracking-widest block mb-4 text-xs"
           >// SOCIAL NETWORKS</span
         >
 
         <ul class="flex flex-col gap-4 list-none p-0 m-0">
-          <!-- GitHub -->
           <li>
             <a
               href={contact.github}
@@ -289,7 +367,6 @@
             </a>
           </li>
 
-          <!-- LinkedIn -->
           <li>
             <a
               href={contact.linkedin}
@@ -314,7 +391,6 @@
             </a>
           </li>
 
-          <!-- Instagram -->
           <li>
             <a
               href={contact.instagram}
